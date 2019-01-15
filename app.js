@@ -12,7 +12,7 @@ const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 const adminRouter = require('./routes/admin')
 
-const connectedUsers = { list : []}
+const connectedUsers = { list: [] }
 
 http.listen(3001, function () {
   console.log('listening on *:3001')
@@ -52,6 +52,16 @@ app.use(function (err, req, res, next) {
 io.on('connection', function (socket) {
   connectedUsers.list.push(socket)
   console.log('a user connected')
+
+  socket.on('countdown start', function (data) {
+    console.log('countdown start', data)
+    io.emit('countdown start')
+  })
+
+  socket.on('countdown stop', function (data) {
+    console.log('countdown stop', data)
+    io.emit('countdown stop')
+  })
 
   socket.on('disconnect', function () {
     connectedUsers.list = []
