@@ -63,6 +63,16 @@ io.on('connection', function (socket) {
     io.emit('countdown stop')
   })
 
+  socket.on('video start', function (data) {
+    console.log('video start', data)
+    io.emit('video start', data)
+  })
+
+  socket.on('video stop', function (data) {
+    console.log('video stop', data)
+    io.emit('video stop')
+  })
+
   socket.on('disconnect', function () {
     connectedUsers.list = []
     console.log('user disconnected')

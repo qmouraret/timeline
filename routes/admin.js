@@ -8,7 +8,7 @@ const initRoute = function (sockets) {
   connectedUsers = sockets
   router.get('/', function (req, res, next) {
 
-    res.render('admin', {})
+    res.render('admin', { mainBodyClass: 'admin' })
   })
 
   return router
