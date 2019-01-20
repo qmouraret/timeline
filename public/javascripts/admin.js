@@ -1,15 +1,6 @@
 window.addEventListener('load', function () {
   const socket = io.connect('http://localhost:3001')
 
-  var currentTime;  // Current time after press start
-  var state=0;      // Job state: 0 = not run, 1 = run
-  var instructions; // List of something to run
-  var sequence;
-
-  // DEMO variable
-  var a=true;
-  // DEMO variable
-
   function lockGUI()
   {
     console.log('Lock GUI')
@@ -28,72 +19,36 @@ window.addEventListener('load', function () {
     document.getElementById("idApoRetour").classList.remove('disabled');
   }
 
-  function restoreGPIO()
-  {
-    console.log('Restore GPIO ')
-  }
-
-  function doJob()
-  {
-    if( state == 1 )
-    {
-      console.log('Next JSON instruction or sleep ?');
-      var d = new Date();
-      var now = d.getMilliseconds();
-
-      console.log('Time is: ', now - d);
-
-      if(a)
-      {
-        socket.emit('video start', { src: '/video/apoDepart.mp4' })
-        a = false;
-      }
-
-      setTimeout(genericStop, 6000);
-    }
-  }
-
-  function genericLauncher(idStory)
-  {
-    console.log("Launcher: ", idStory);
-
-    if(state == 1)
-    {
-      genericStop();
-    }
-    else
-    {
-      // Read JSON
-
-      // Disable GUI
-      lockGUI();
-
-      // Start sequence
-      var d = new Date();
-      currentTime = d.getMilliseconds();
-      state = 1;
-
-      sequence = setInterval(doJob, 200);
-    }
-  }
-
-  function genericStop()
-  {
-    a = true;
-
-    // Remove timer
-    clearInterval(sequence);
-
-    // Restore clean system state
-    state = 0;
-    socket.emit('video stop', {})
-    unlockGUI();
-    restoreGPIO();
-  }
-
   socket.on('countdown_start', function (data) {
     console.log('countdown_start ', data)
     // socket.emit('my other event', { my: 'data' })
+  })
+
+  socket.on('lockGUI', function () {
+    console.log('lockGUI ')
+
+    document.getElementById("idManoirDepart").classList.add('disabled')
+    document.getElementById("idManoirRetour").classList.add('disabled')
+    document.getElementById("idApoDepart").classList.add('disabled')
+    document.getElementById("idApoRetour").classList.add('disabled')
+  })
+
+  socket.on('unlockGUI', function () {
+    console.log('unlockGUI ')
+
+    document.getElementById("idManoirDepart").classList.remove('disabled')
+    document.getElementById("idManoirRetour").classList.remove('disabled')
+    document.getElementById("idApoDepart").classList.remove('disabled')
+    document.getElementById("idApoRetour").classList.remove('disabled')
+  })
+
+  socket.on('updateIcon', function (data) {
+    var badge = ['badge-danger', 'badge-success']
+    if(data.enable) {
+      badge = [badge[1], badge[0]]
+    }
+    document.getElementById(data.id).classList.add(badge[0])
+    document.getElementById(data.id).classList.remove(badge[1])
   })
 
   const countdownstart = document.getElementById('idStartCountdown')
@@ -105,6 +60,12 @@ window.addEventListener('load', function () {
   countdownstop.onclick = function () {
     console.log('click stop !')
     socket.emit('countdown stop', { ok: true })
+  }
+
+  const gpioON = document.getElementById('idGPIO')
+  gpioON.onclick = function () {
+    console.log('GPIO ON')
+    socket.emit('DEV_TEST_GPIO_ON', {})
   }
 
   const videoStart = document.getElementById('idStartVideo')
@@ -121,20 +82,28 @@ window.addEventListener('load', function () {
   // Make something more generic ?
   const manoirStart = document.getElementById('idManoirDepart')
   manoirStart.onclick = function () {
-    genericLauncher('ManoirDepart')
+    socket.emit('launcher', {id: 'ManoirDepart'})
   }
   const manoirStop = document.getElementById('idManoirRetour')
   manoirStop.onclick = function () {
-    genericLauncher('ManoirRetour')
+    socket.emit('launcher', {id: 'ManoirRetour'})
   }
   const apoStart = document.getElementById('idApoDepart')
   apoStart.onclick = function () {
-    genericLauncher('ApoDepart')
+    socket.emit('launcher', {id: 'ApoDepart'})
   }
   const apoStop = document.getElementById('idApoRetour')
   apoStop.onclick = function () {
-    genericLauncher('ApoRetour')
+    socket.emit('launcher', {id: 'ApoRetour'})
+  }
+  const demoButton = document.getElementById('idQuick')
+  demoButton.onclick = function () {
+    console.log('Start DEMO!')
+    socket.emit('launcher', {id: 'DEMO'})
   }
 
-
+  const urgentStop = document.getElementById('idUrgentStop')
+  urgentStop.onclick = function () {
+    socket.emit('shutdown', {})
+  }
 })

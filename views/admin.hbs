@@ -10,7 +10,7 @@
             </div>
 
             <div class="inner cover">
-                <div class="d-flex bd-highlight">
+                <div class="d-flex bd-highlight justify-content-center">
                     <div class="p-2 flex-fill bd-highlight">
                         <div class="card" style="width: 18rem;">
                             <img src="https://static.wixstatic.com/media/af8b5f_549267765b8c411aae653e1f205f94a1~mv2.jpg/v1/fill/w_464,h_308,al_c,q_80,usm_0.66_1.00_0.01/af8b5f_549267765b8c411aae653e1f205f94a1~mv2.webp" class="card-img-top" alt="...">
@@ -18,8 +18,8 @@
                                 <h5 class="card-title">Manoir</h5>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a id="idManoirDepart" onclick="genericLauncher();" class="btn btn-primary" >Départ</a></li>
-                                <li class="list-group-item"><a id="idManoirRetour" onclick="genericLauncher();" class="btn btn-primary" >Retour</a></li>
+                                <li class="list-group-item"><a id="idManoirDepart" class="btn btn-primary" >Départ</a></li>
+                                <li class="list-group-item"><a id="idManoirRetour" class="btn btn-primary" >Retour</a></li>
                             </ul>
                         </div>
                     </div>
@@ -30,11 +30,32 @@
                                 <h5 class="card-title">Apocalypse</h5>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a id="idApoDepart" href="" onclick="genericLauncher();" class="btn btn-primary">Départ</a></li>
-                                <li class="list-group-item"><a id="idApoRetour" href="" onclick="genericLauncher();" class="btn btn-primary">Retour</a></li>
+                                <li class="list-group-item"><a id="idApoDepart" class="btn btn-primary">Départ</a></li>
+                                <li class="list-group-item"><a id="idApoRetour" class="btn btn-primary">Retour</a></li>
                             </ul>
                         </div>
                     </div>
+                    <div class="p-2 flex-fill bd-highlight">
+                        <div class="col-sm-12">
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://cloudinary.4escape.io/forescape/image/upload/dpr_auto/crc6mziamqekbbqfciud" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Management</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span id="idControl"   class="badge badge-danger"><i class="fas fa-keyboard fa-3x"></i></span>
+                                        <span id="idLumiere"   class="badge badge-danger"><i class="far fa-lightbulb fa-3x"></i></span>
+                                        <span id="idVentillo"  class="badge badge-danger"><i class="fas fa-wind fa-3x"></i></span>
+                                        <span id="idRoom1"     class="badge badge-danger"><i class="fas fa-door-open fa-3x"></i> 1</span>
+                                        <span id="idRoom2"     class="badge badge-danger"><i class="fas fa-door-open fa-3x"></i> 2</span>
+                                    </li>
+                                    <li class="list-group-item"><a id="idUrgentStop" class="btn btn-danger" >Arrêt de la salle de transfert</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="p-2 flex-fill bd-highlight">
                         <div class="col-sm-12">
                             <div class="card" style="width: 18rem;">
@@ -43,10 +64,10 @@
                                     <h5 class="card-title">Dev</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><button id="idStartCountdown">Start countdown</button></li>
-                                    <li class="list-group-item"><button id="idStopCountdown">Stop countdown</button></li>
-                                    <li class="list-group-item"><button id="idStartVideo">Start video</button></li>
-                                    <li class="list-group-item"><button id="idStopVideo">Stop video</button></li>
+                                    <li class="list-group-item"><a id="idQuick" class="btn btn-primary">DEMO</a></li>
+                                    <li class="list-group-item"><button id="idStartCountdown">Start countdown</button><button id="idStopCountdown">Stop countdown</button></li>
+                                    <li class="list-group-item"><button id="idStartVideo">Start video</button><button id="idStopVideo">Stop video</button></li>
+                                    <li class="list-group-item"><button id="idGPIO">GPIO ON</button></li>
                                 </ul>
                             </div>
                         </div>

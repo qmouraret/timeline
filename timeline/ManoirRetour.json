@@ -1,0 +1,11 @@
+[
+  { "time":"0",       "actions" : [{"type": "video", "data" : { "id": "/video/manoirRetour.mp4", "state": "ON"}}] },
+  { "time":"18000",   "actions" : [{"type": "gpio",  "data" : { "id": "0", "state": "ON"}}] },
+  { "time":"25000",   "actions" : [{"type": "gpio",  "data" : { "id": "1", "state": "ON"}}] },
+  { "time":"29000",   "actions" : [{"type": "gpio",  "data" : { "id": "2", "state": "ON"}}] },
+  { "time":"120000",  "actions" : [{"type": "gpio",  "data" : { "id": "0", "state": "OFF"}},
+                                   {"type": "gpio",  "data" : { "id": "1", "state": "OFF"}},
+                                   {"type": "gpio",  "data" : { "id": "2", "state": "OFF"}}] },
+  { "time":"128000",  "actions" : [{"type": "gpio",  "data" : { "id": "3", "state": "ON"}}] },
+  { "time":"150000",  "actions" : [{"type": "video", "data" : { "id": "",  "state": "OFF"}}] }
+]
