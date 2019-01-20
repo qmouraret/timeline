@@ -51,7 +51,7 @@ window.addEventListener('load', function () {
       this.player.style.display = 'block'
       this.player.src = this.source
       this.player.addEventListener('progress', function (data) {
-          console.log('- ', data)
+          //console.log('- ', data)
         }, true
       )
       // this.player.currentTime = 10.0
@@ -88,5 +88,14 @@ window.addEventListener('load', function () {
   socket.on('video stop', function (data) {
     console.log('video stop', data)
     videoPlayer.stop()
+    videoPlayer = null
   })
+
+  socket.on('lockGUI', function (data) {
+    console.log('lockGUI', ": do nothing")
+  })
+  socket.on('unlockGUI start', function (data) {
+    console.log('unlockGUI', ": do nothing")
+  })
+
 })
