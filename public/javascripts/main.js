@@ -1,5 +1,5 @@
 window.addEventListener('load', function () {
-  const socket = io.connect('http://localhost:3001')
+  const socket = io.connect(window.hostname) // 'http://localhost:3001')
   let countdown = null
   let videoPlayer = null
 
