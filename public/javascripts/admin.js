@@ -118,9 +118,22 @@ window.addEventListener('load', function () {
     socket.emit('video stop', {})
   }
 
+  // Make something more generic ?
   const manoirStart = document.getElementById('idManoirDepart')
   manoirStart.onclick = function () {
     genericLauncher('ManoirDepart')
+  }
+  const manoirStop = document.getElementById('idManoirRetour')
+  manoirStop.onclick = function () {
+    genericLauncher('ManoirRetour')
+  }
+  const apoStart = document.getElementById('idApoDepart')
+  apoStart.onclick = function () {
+    genericLauncher('ApoDepart')
+  }
+  const apoStop = document.getElementById('idApoRetour')
+  apoStop.onclick = function () {
+    genericLauncher('ApoRetour')
   }
 
 
