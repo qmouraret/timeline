@@ -1,0 +1,4 @@
+{
+  "time":"0",   "action" : {"type": "video", "data" : { "id": "./", "state": "ON"} }
+  "time":"0.1", "action" : {"type": "gpio",  "data" : { "id": "1",  "state": "ON"} }
+}
