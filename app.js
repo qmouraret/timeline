@@ -15,6 +15,32 @@ const adminRouter = require('./routes/admin')
 
 const connectedUsers = { list: [] }
 
+// Optional package
+let GPÏOReady = false
+var gpio = null
+try
+{
+  const GPIOPackage = 'rpi-gpio'
+  require.resolve(GPIOPackage)
+  gpio = require(GPIOPackage)
+  GPÏOReady = true
+}
+catch(error)
+{
+  console.log('Impossible to use GPIO: please install package if you are on Raspberry system.')
+}
+
+let mappingGPIO = null
+try
+{
+  mappingGPIO = JSON.parse(fs.readFileSync("./timeline/GPIO.json"))
+}
+catch(error)
+{
+  console.log('Impossible to use GPIO: See if GPIO.json is correct.', error)
+}
+console.log("GPIO: ", mappingGPIO)
+
 http.listen(3001, function () {
   console.log('listening on *:3001')
 })
@@ -55,39 +81,32 @@ var state=0             // Job state: 0 = not run, 1 = run
 var instructions = []   // List of something to run
 var sequence            // Timer
 
-const debug = true
+const debug = false
 const debugVerbose = false
 
 function enableGPIO(id, state)
 {
-  switch(id)
+  if(id in mappingGPIO)
   {
-    case 0: // Mapping light
-
-      io.emit("updateIcon", { "id": "idControl", "enable": state })
-      break;
-
-    case 1: // Mapping light
-
-      io.emit("updateIcon", { "id": "idLumiere", "enable": state })
-      break;
-
-    case 2: // Mapping ventil
-
-      io.emit("updateIcon", { "id": "idVentillo", "enable": state })
-      break;
-
-    case 3: // Mapping porte1
-
-      io.emit("updateIcon", { "id": "idRoom1", "enable": state })
-      break;
-
-    case 4: // Mapping porte2
-
-      io.emit("updateIcon", { "id": "idRoom2", "enable": state })
-      break;
-    default:
-      log.console("Unmapped GPIO port")
+    const controller = mappingGPIO[id]
+    if( GPÏOReady )
+    {
+      const pin = parseInt(controller.pin)
+      var gpiop = gpio.promise;
+      gpiop.setup(pin, gpio.DIR_OUT)
+          .then(() => {
+            return gpiop.write(pin, state)
+          })
+          .catch((err) => {
+            io.emit("clientError", { "message": "Erreur du GPIO: "+pin+" n'a pas réussi." })
+          })
+    }
+    io.emit("updateIcon", { "id": controller.gui, "enable": state })
+  }
+  else
+  {
+    console.log('Error GPIO: ', id)
+    io.emit("clientError", { "message": "Erreur du GPIO mapping: "+id+" n'est pas connu. Reconfigurer le serveur." })
   }
 }
 
@@ -96,10 +115,12 @@ function restoreGPIO()
   console.log('Restore GPIO ')
 
   // Disable all
-  enableGPIO(0, false);
-  enableGPIO(1, false);
-  enableGPIO(2, false);
-  enableGPIO(3, false);
+  for(let key in mappingGPIO)
+  {
+    if(debug)
+      console.log('Pin: ', key)
+    enableGPIO(key, false)
+  }
 }
 
 function doJob()
@@ -144,9 +165,10 @@ function doJob()
               io.emit('video stop', {})
             }
           } else if( action.type == "gpio"){
-            console.log("GPIO: ", action.data.id, " = ", action.data.state)
+            if(debug)
+              console.log("GPIO: ", action.data.id, " = ", action.data.state)
             var statePIN = (action.data.state == "ON")
-            enableGPIO(parseInt(action.data.id), statePIN)
+            enableGPIO(action.data.id, statePIN)
           }
         }
 
@@ -213,10 +235,9 @@ io.on('connection', function (socket) {
   socket.on('DEV_TEST_GPIO_ON', function () {
     connectedUsers.list = []
     console.log('GPIO ON')
-    enableGPIO(0, true)
-    enableGPIO(1, true)
-    enableGPIO(2, true)
-    enableGPIO(3, true)
+    for(let key in mappingGPIO) {
+      enableGPIO(key, true)
+    }
   })
 
   socket.on('launcher', function(idStory) {

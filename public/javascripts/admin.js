@@ -51,6 +51,12 @@ window.addEventListener('load', function () {
     document.getElementById(data.id).classList.remove(badge[1])
   })
 
+  socket.on('clientError', function (data) {
+    console.log('Message from server: ', data)
+    document.getElementById("console").innerHTML = data.message
+  })
+
+
   const countdownstart = document.getElementById('idStartCountdown')
   countdownstart.onclick = function () {
     console.log('click start !')
@@ -62,11 +68,7 @@ window.addEventListener('load', function () {
     socket.emit('countdown stop', { ok: true })
   }
 
-  const gpioON = document.getElementById('idGPIO')
-  gpioON.onclick = function () {
-    console.log('GPIO ON')
-    socket.emit('DEV_TEST_GPIO_ON', {})
-  }
+
 
   const videoStart = document.getElementById('idStartVideo')
   videoStart.onclick = function () {
@@ -102,8 +104,19 @@ window.addEventListener('load', function () {
     socket.emit('launcher', {id: 'DEMO'})
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  // DEV
+  const testConsoleError = document.getElementById('idDemoERROR')
+  testConsoleError.onclick = function () {
+    socket.emit('launcher', {id: 'DEMO_ERROR'})
+  }
   const urgentStop = document.getElementById('idUrgentStop')
   urgentStop.onclick = function () {
     socket.emit('shutdown', {})
+  }
+  const gpioON = document.getElementById('idGPIO')
+  gpioON.onclick = function () {
+    console.log('GPIO ON')
+    socket.emit('DEV_TEST_GPIO_ON', {})
   }
 })

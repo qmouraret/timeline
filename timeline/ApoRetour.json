@@ -1,11 +1,10 @@
 [
   { "time":"0",       "actions" : [{"type": "video", "data" : { "id": "/video/apoRetour.mp4", "state": "ON"}}] },
-  { "time":"18000",   "actions" : [{"type": "gpio",  "data" : { "id": "0", "state": "ON"}}] },
-  { "time":"25000",   "actions" : [{"type": "gpio",  "data" : { "id": "1", "state": "ON"}}] },
-  { "time":"29000",   "actions" : [{"type": "gpio",  "data" : { "id": "2", "state": "ON"}}] },
-  { "time":"120000",  "actions" : [{"type": "gpio",  "data" : { "id": "0", "state": "OFF"}},
-                                   {"type": "gpio",  "data" : { "id": "1", "state": "OFF"}},
-                                   {"type": "gpio",  "data" : { "id": "2", "state": "OFF"}}] },
-  { "time":"128000",  "actions" : [{"type": "gpio",  "data" : { "id": "3", "state": "ON"}}] },
-  { "time":"150000",  "actions" : [{"type": "video", "data" : { "id": "",  "state": "OFF"}}] }
+  { "time":"1000",    "actions" : [{"type": "gpio",  "data" : { "id": "console",  "state": "ON"}},
+                                   {"type": "gpio",  "data" : { "id": "lumiere",  "state": "ON"}},
+                                   {"type": "gpio",  "data" : { "id": "ventillo", "state": "ON"}}] },
+  { "time":"230000",  "actions" : [{"type": "gpio",  "data" : { "id": "console",  "state": "OFF"}},
+                                   {"type": "gpio",  "data" : { "id": "lumiere",  "state": "OFF"}},
+                                   {"type": "gpio",  "data" : { "id": "ventillo", "state": "OFF"}}] },
+  { "time":"300000",  "actions" : [{"type": "video", "data" : { "id": "",  "state": "OFF"}}] }
 ]

@@ -1,0 +1,7 @@
+{
+  "console":  {"pin": "0", "gui": "idControl"},
+  "lumiere":  {"pin": "1", "gui": "idLumiere"},
+  "ventillo": {"pin": "2", "gui": "idVentillo"},
+  "porte1":   {"pin": "3", "gui": "idRoom1"},
+  "porte2":   {"pin": "4", "gui": "idRoom2"}
+}
