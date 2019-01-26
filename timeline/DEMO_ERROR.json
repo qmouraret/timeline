@@ -1,0 +1,3 @@
+[
+  { "time":"0",   "actions" : [{"type": "gpio",  "data" : { "id": "unknownLabel", "state": "ON"}}] }
+]

@@ -7,8 +7,8 @@ const initRoute = function (sockets) {
   console.log('sockets : ', sockets.length)
   connectedUsers = sockets
   router.get('/', function (req, res, next) {
-
-    res.render('admin', { mainBodyClass: 'admin' })
+    const hostname = `http://${req.hostname}:3001`
+    res.render('admin', { mainBodyClass: 'admin', hostname })
   })
 
   return router
