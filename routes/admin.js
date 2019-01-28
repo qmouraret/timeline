@@ -3,10 +3,11 @@ const router = express.Router()
 let connectedUsers
 
 /* GET users listing. */
-const initRoute = function (sockets) {
+const initRoute = (sockets) => {
   console.log('sockets : ', sockets.length)
   connectedUsers = sockets
-  router.get('/', function (req, res, next) {
+  console.log('connectedUsers: ', connectedUsers)
+  router.get('/', (req, res, next) => {
     const hostname = `http://${req.hostname}:3001`
     res.render('admin', { mainBodyClass: 'admin', hostname })
   })

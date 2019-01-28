@@ -1,5 +1,5 @@
 window.addEventListener('load', function () {
-  const socket = io.connect(window.hostname) // 'http://localhost:3001')
+  const socket = window.io.connect(window.hostname) // 'http://localhost:3001')
   let countdown = null
   let videoPlayer = null
 
@@ -50,10 +50,7 @@ window.addEventListener('load', function () {
       }
       this.player.style.display = 'block'
       this.player.src = this.source
-      this.player.addEventListener('progress', function (data) {
-          //console.log('- ', data)
-        }, true
-      )
+      this.player.addEventListener('progress', function (data) { }, true)
       // this.player.currentTime = 10.0
       this.player.play()
     },
@@ -92,10 +89,9 @@ window.addEventListener('load', function () {
   })
 
   socket.on('lockGUI', function (data) {
-    console.log('lockGUI', ": do nothing")
+    console.log('lockGUI', ': do nothing')
   })
   socket.on('unlockGUI start', function (data) {
-    console.log('unlockGUI', ": do nothing")
+    console.log('unlockGUI', ': do nothing')
   })
-
 })

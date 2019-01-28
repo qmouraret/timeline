@@ -1,23 +1,22 @@
 window.addEventListener('load', function () {
-  const socket = io.connect(window.hostname) // 'http://localhost:3001')
+  const socket = window.io.connect(window.hostname) // 'http://localhost:3001')
 
-  function lockGUI()
-  {
-    console.log('Lock GUI')
-    document.getElementById("idManoirDepart").classList.add('disabled');
-    document.getElementById("idManoirRetour").classList.add('disabled');
-    document.getElementById("idApoDepart").classList.add('disabled');
-    document.getElementById("idApoRetour").classList.add('disabled');
-  }
-
-  function unlockGUI()
-  {
-    console.log('Unlock GUI')
-    document.getElementById("idManoirDepart").classList.remove('disabled');
-    document.getElementById("idManoirRetour").classList.remove('disabled');
-    document.getElementById("idApoDepart").classList.remove('disabled');
-    document.getElementById("idApoRetour").classList.remove('disabled');
-  }
+  // TODO: needed ?
+  // function lockGUI () {
+  //   console.log('Lock GUI')
+  //   document.getElementById('idManoirDepart').classList.add('disabled')
+  //   document.getElementById('idManoirRetour').classList.add('disabled')
+  //   document.getElementById('idApoDepart').classList.add('disabled')
+  //   document.getElementById('idApoRetour').classList.add('disabled')
+  // }
+  //
+  // function unlockGUI () {
+  //   console.log('Unlock GUI')
+  //   document.getElementById('idManoirDepart').classList.remove('disabled')
+  //   document.getElementById('idManoirRetour').classList.remove('disabled')
+  //   document.getElementById('idApoDepart').classList.remove('disabled')
+  //   document.getElementById('idApoRetour').classList.remove('disabled')
+  // }
 
   socket.on('countdown_start', function (data) {
     console.log('countdown_start ', data)
@@ -27,24 +26,24 @@ window.addEventListener('load', function () {
   socket.on('lockGUI', function () {
     console.log('lockGUI ')
 
-    document.getElementById("idManoirDepart").classList.add('disabled')
-    document.getElementById("idManoirRetour").classList.add('disabled')
-    document.getElementById("idApoDepart").classList.add('disabled')
-    document.getElementById("idApoRetour").classList.add('disabled')
+    document.getElementById('idManoirDepart').classList.add('disabled')
+    document.getElementById('idManoirRetour').classList.add('disabled')
+    document.getElementById('idApoDepart').classList.add('disabled')
+    document.getElementById('idApoRetour').classList.add('disabled')
   })
 
   socket.on('unlockGUI', function () {
     console.log('unlockGUI ')
 
-    document.getElementById("idManoirDepart").classList.remove('disabled')
-    document.getElementById("idManoirRetour").classList.remove('disabled')
-    document.getElementById("idApoDepart").classList.remove('disabled')
-    document.getElementById("idApoRetour").classList.remove('disabled')
+    document.getElementById('idManoirDepart').classList.remove('disabled')
+    document.getElementById('idManoirRetour').classList.remove('disabled')
+    document.getElementById('idApoDepart').classList.remove('disabled')
+    document.getElementById('idApoRetour').classList.remove('disabled')
   })
 
   socket.on('updateIcon', function (data) {
-    var badge = ['badge-danger', 'badge-success']
-    if(data.enable) {
+    let badge = ['badge-danger', 'badge-success']
+    if (data.enable) {
       badge = [badge[1], badge[0]]
     }
     document.getElementById(data.id).classList.add(badge[0])
@@ -53,9 +52,8 @@ window.addEventListener('load', function () {
 
   socket.on('clientError', function (data) {
     console.log('Message from server: ', data)
-    document.getElementById("console").innerHTML = data.message
+    document.getElementById('console').innerHTML = data.message
   })
-
 
   const countdownstart = document.getElementById('idStartCountdown')
   countdownstart.onclick = function () {
@@ -67,8 +65,6 @@ window.addEventListener('load', function () {
     console.log('click stop !')
     socket.emit('countdown stop', { ok: true })
   }
-
-
 
   const videoStart = document.getElementById('idStartVideo')
   videoStart.onclick = function () {
@@ -84,31 +80,31 @@ window.addEventListener('load', function () {
   // Make something more generic ?
   const manoirStart = document.getElementById('idManoirDepart')
   manoirStart.onclick = function () {
-    socket.emit('launcher', {id: 'ManoirDepart'})
+    socket.emit('launcher', { id: 'ManoirDepart' })
   }
   const manoirStop = document.getElementById('idManoirRetour')
   manoirStop.onclick = function () {
-    socket.emit('launcher', {id: 'ManoirRetour'})
+    socket.emit('launcher', { id: 'ManoirRetour' })
   }
   const apoStart = document.getElementById('idApoDepart')
   apoStart.onclick = function () {
-    socket.emit('launcher', {id: 'ApoDepart'})
+    socket.emit('launcher', { id: 'ApoDepart' })
   }
   const apoStop = document.getElementById('idApoRetour')
   apoStop.onclick = function () {
-    socket.emit('launcher', {id: 'ApoRetour'})
+    socket.emit('launcher', { id: 'ApoRetour' })
   }
   const demoButton = document.getElementById('idQuick')
   demoButton.onclick = function () {
     console.log('Start DEMO!')
-    socket.emit('launcher', {id: 'DEMO'})
+    socket.emit('launcher', { id: 'DEMO' })
   }
 
-  ////////////////////////////////////////////////////////////////////////
+  /// /////////////////////////////////////////////////////////////////////
   // DEV
   const testConsoleError = document.getElementById('idDemoERROR')
   testConsoleError.onclick = function () {
-    socket.emit('launcher', {id: 'DEMO_ERROR'})
+    socket.emit('launcher', { id: 'DEMO_ERROR' })
   }
   const urgentStop = document.getElementById('idUrgentStop')
   urgentStop.onclick = function () {
